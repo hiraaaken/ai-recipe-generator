@@ -8,11 +8,13 @@ const schema = a.schema({
 
   askBedrock: a
     .query()
-    .arguments({ ingredients: a.string().array()})
+    .arguments({ ingredients: a.string().array() })
     .returns(a.ref("BedrockResponse"))
     .authorization((allow) => [allow.authenticated()])
-    .handler(a.handler.custom({ entry: "./bedrock.js", dataSource: "bedrockDS"})
-  ),
+    .handler(a.handler.custom({ 
+      entry: "./bedrock.js", 
+      dataSource: "bedrockDS"
+    }))
 });
 
 export type Schema = ClientSchema<typeof schema>;

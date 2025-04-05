@@ -2,9 +2,7 @@ import { defineBackend } from '@aws-amplify/backend';
 import { auth } from './auth/resource';
 import { data } from './data/resource';
 import { PolicyStatement } from 'aws-cdk-lib/aws-iam';
-/**
- * @see https://docs.amplify.aws/react/build-a-backend/ to add storage, functions, and more
- */
+
 const backend = defineBackend({
   auth,
   data,
@@ -12,7 +10,7 @@ const backend = defineBackend({
 
 const bedrockDataSource = backend.data.resources.graphqlApi.addHttpDataSource(
   "bedrockDS",
-  "https://bedrock.ap-northeast-1.amazonaws.com",
+  "https://bedrock-runtime.ap-northeast-1.amazonaws.com",
   {
     authorizationConfig: {
       signingRegion: "ap-northeast-1",
@@ -24,7 +22,7 @@ const bedrockDataSource = backend.data.resources.graphqlApi.addHttpDataSource(
 bedrockDataSource.grantPrincipal.addToPrincipalPolicy(
   new PolicyStatement({
     resources: [
-      "arn:aws:bedrock:ap-northeast-1::foundation-model/amazon.nova-micro-v1:0",
+      "arn:aws:bedrock:ap-northeast-1::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0",
     ],
     actions: ["bedrock:InvokeModel"],
   })
